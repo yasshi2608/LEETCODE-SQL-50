@@ -1,0 +1,21 @@
+#Process: USED DATE_ADD FOR FORMING RELATIONSHIP BETWEEN DATES
+#For 2015-01-02:
+#w2.recordDate = 2015-01-01 and DATE_ADD(w2.recordDate, INTERVAL 1 DAY) = 2015-01-02.
+#w1.recordDate = 2015-01-02 matches.
+#Compare temperatures: 25 (2015-01-02) > 10 (2015-01-01) -> Include.
+#For 2015-01-03:
+#w2.recordDate = 2015-01-02 and DATE_ADD(w2.recordDate, INTERVAL 1 DAY) = 2015-01-03.
+#w1.recordDate = 2015-01-03 matches.
+#Compare temperatures: 20 (2015-01-03) < 25 (2015-01-02) -> Exclude.
+#For 2015-01-04:
+#w2.recordDate = 2015-01-03 and DATE_ADD(w2.recordDate, INTERVAL 1 DAY) = 2015-01-04.
+#w1.recordDate = 2015-01-04 matches.
+#Compare temperatures: 30 (2015-01-04) > 20 (2015-01-03) -> Include.
+
+#CODE- 
+SELECT W1.ID
+FROM WEATHER AS W1
+JOIN WEATHER AS W2
+ON W1.RECORDDATE=DATE_ADD(W2.RECORDDATE,INTERVAL 1 DAY)
+WHERE W1.TEMPERATURE>W2.TEMPERATURE;
+
